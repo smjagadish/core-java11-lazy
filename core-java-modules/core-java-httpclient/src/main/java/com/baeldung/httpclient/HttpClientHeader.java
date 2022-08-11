@@ -1,5 +1,8 @@
 package com.baeldung.httpclient;
 
+import com.baeldung.data.ResponseData;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -16,7 +19,19 @@ public class HttpClientHeader {
             .header("X-Our-Header-1", "value1")
             .header("X-Our-Header-1", "value2")
             .header("X-Our-Header-2", "value2")
-            .uri(new URI(url)).build();
+                .uri(new URI(url)).build();
+
+        return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
+    public static HttpResponse<String> callWithCustomHeaderPojoBody(String url) throws URISyntaxException, IOException, InterruptedException {
+        HttpClient httpClient = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .header("X-Our-Header-1", "value1")
+                .header("X-Our-Header-1", "value2")
+                .header("X-Our-Header-2", "value2")
+                .uri(new URI(url)).build();
 
         return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
     }
